@@ -47,6 +47,7 @@ jobs:
       with:
         scan-type: 'config'
         scan-ref: './Dockerfile'    
+        format: 'table'
 
     - name: Create Secret for TMDB API Key
       run: |
