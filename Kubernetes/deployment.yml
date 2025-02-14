@@ -16,6 +16,12 @@ spec:
     spec:
       containers:
       - name: netflix-app
-        image: nasi101/netflix:latest
+        image: us-central1-docker.pkg.dev/seraphic-ripple-450910-m1/netflix-image/netflix:latest
         ports:
         - containerPort: 80
+        env:
+        - name: VITE_APP_TMDB_V3_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: tmdb-api-secret
+              key: TMDB_V3_API_KEY
