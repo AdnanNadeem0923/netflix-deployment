@@ -15,17 +15,25 @@ jobs:
   deploy:
     name: Deploy to GKE
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
+    - name: Authenticate with GCP
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}  # Use the GitHub Secret
 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
       with:
         project_id: ${{ env.PROJECT_ID }}
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-        export_default_credentials: true
+
+    - name: Verify Authentication
+      run: |
+        gcloud auth list
+        gcloud config list
 
     - name: Get GKE credentials
       uses: google-github-actions/get-gke-credentials@v2
