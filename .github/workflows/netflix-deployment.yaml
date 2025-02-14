@@ -42,6 +42,12 @@ jobs:
         cluster_name: ${{ env.GKE_CLUSTER }}
         location: ${{ env.GKE_ZONE }}
 
+    - name: Security Scan - Trivy on Dockerfile
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'config'
+        scan-ref: './Dockerfile'    
+
     - name: Create Secret for TMDB API Key
       run: |
         kubectl create secret generic tmdb-api-secret \
